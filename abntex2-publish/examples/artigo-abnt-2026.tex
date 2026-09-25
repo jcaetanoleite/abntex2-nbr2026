@@ -1,0 +1,42 @@
+\documentclass[article,11pt,oneside,a4paper,brazil]{abntex2}
+
+% Coloque a pasta latex/ no TEXINPUTS ou copie estes três arquivos para a
+% mesma pasta do artigo:
+%   abntex2-nbr2026.sty, abnt-nbr2026.cbx, abnt-nbr2026.bbx
+\usepackage{abntex2-nbr2026}
+\usepackage[backend=biber,style=abnt-nbr2026,citestyle=abnt-nbr2026]{biblatex}
+\addbibresource{referencias.bib}
+
+\titulo{Modelo mínimo de artigo com atualização ABNT 2026}
+\tituloestrangeiro{Minimal article template with the 2026 ABNT refresh}
+\autor{Nome do Autor}
+\data{2026}
+
+\begin{document}
+\maketitle
+
+\begin{resumoumacoluna}
+Este é um resumo demonstrativo em parágrafo único, conforme o fluxo atualizado.
+\palavraschave{economia política; democracia; desenvolvimento}
+\end{resumoumacoluna}
+
+\renewcommand{\resumoname}{Abstract}
+\begin{resumoumacoluna}
+This is a short demonstration abstract.
+\keywords{political economy; democracy; development}
+\end{resumoumacoluna}
+
+\textual
+\section{Introdução}
+
+A chamada parentética deve aparecer como \parencite{silva2024}. Uma fonte sem
+responsabilidade declarada usa a entrada pelo título: \parencite{anteprojeto1987}.
+
+\begin{citacao}
+Este ambiente preserva o recuo configurável do abnTeX2 para citações diretas
+longas. O valor pode ser alterado com \verb|\setlength{\ABNTEXcitacaorecuo}{...}|.
+\end{citacao}
+
+\postextual
+\printbibliography
+\end{document}

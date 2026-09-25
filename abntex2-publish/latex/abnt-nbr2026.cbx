@@ -1,0 +1,81 @@
+%% abnt-nbr2026.cbx
+%% Experimental citation layer over biblatex-abnt for ABNT NBR 10520:2023.
+%% Copyright 2026 João Caetano Leite and contributors.
+%% Distributed under the LaTeX Project Public License 1.3c or later.
+\ProvidesFile{abnt-nbr2026.cbx}[2026/09/25 v0.1.0-dev ABNT NBR 10520:2023]
+\RequireCitationStyle{abnt}
+
+\ExecuteBibliographyOptions{%
+  accite=false,
+  sccite=false,
+  maxcitenames=3,
+  mincitenames=1,
+  uniquename=minfull
+}
+
+% Desambiguação: primeiro iniciais, depois prenome completo se necessário.
+\DeclareNameFormat{textlabelname}{%
+  \ifcase\value{uniquename}%
+    \usebibmacro{name:family}%
+      {\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+  \or
+    \usebibmacro{name:given-family}%
+      {\namepartfamily}{\namepartgiveni}{\namepartprefix}{\namepartsuffixi}%
+  \or
+    \usebibmacro{name:given-family}%
+      {\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+  \fi
+  \usebibmacro{name:andothers}}
+
+% Entrada pelo título para fontes sem autoria/responsabilidade.
+\ExplSyntaxOn
+\seq_new:N \l__abntnbr_tit_words_seq
+\tl_new:N  \l__abntnbr_tit_main_tl
+\tl_new:N  \l__abntnbr_tit_first_tl
+\tl_new:N  \l__abntnbr_tit_first_lower_tl
+\clist_const:Nn \c__abntnbr_tit_leads_clist
+  {a,o,as,os,um,uma,uns,umas,de,da,do,das,dos,em,no,na,nos,nas,ao,aos,e,por,com,sem,sob}
+\cs_generate_variant:Nn \clist_if_in:NnTF { NV }
+\cs_generate_variant:Nn \tl_lower_case:n { V }
+
+\cs_new_protected:Npn \abntnbr_citetitle_abbrev:n #1
+  {
+    \tl_set:Nn \l__abntnbr_tit_main_tl {#1}
+    \regex_replace_once:nnN { \s* : \s* .* \Z } { } \l__abntnbr_tit_main_tl
+    \regex_replace_once:nnN { [.,;]+ \s* \Z } { } \l__abntnbr_tit_main_tl
+    \seq_set_split:NnV \l__abntnbr_tit_words_seq { ~ } \l__abntnbr_tit_main_tl
+    \seq_remove_all:Nn \l__abntnbr_tit_words_seq { }
+    \int_compare:nNnTF { \seq_count:N \l__abntnbr_tit_words_seq } = {1}
+      {
+        \seq_pop_left:NN \l__abntnbr_tit_words_seq \l__abntnbr_tit_first_tl
+        \exp_args:NV \MakeCapital \l__abntnbr_tit_first_tl
+      }
+      {
+        \seq_pop_left:NN \l__abntnbr_tit_words_seq \l__abntnbr_tit_first_tl
+        \tl_set:Nx \l__abntnbr_tit_first_lower_tl
+          { \tl_lower_case:V \l__abntnbr_tit_first_tl }
+        \exp_args:NV \MakeCapital \l__abntnbr_tit_first_tl
+        \clist_if_in:NVTF \c__abntnbr_tit_leads_clist \l__abntnbr_tit_first_lower_tl
+          {
+            \seq_if_empty:NF \l__abntnbr_tit_words_seq
+              {
+                \c_space_tl
+                \seq_pop_left:NN \l__abntnbr_tit_words_seq \l_tmpa_tl
+                \tl_use:N \l_tmpa_tl
+              }
+          }
+          { }
+        \seq_if_empty:NF \l__abntnbr_tit_words_seq
+          { \c_space_tl \mbox{[...]} }
+      }
+  }
+\cs_set_eq:NN \ABNTNBRCiteTitleAbbrev \abntnbr_citetitle_abbrev:n
+\ExplSyntaxOff
+
+\DeclareFieldFormat{firstword}{%
+  \normalfont
+  \iffieldundef{shorttitle}
+    {\ABNTNBRCiteTitleAbbrev{#1}}
+    {\MakeCapital{#1}}}
+
+\endinput
