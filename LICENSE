@@ -1,0 +1,12 @@
+LaTeX Project Public License 1.3c or later
+
+This repository's original compatibility-layer files are distributed under the
+LaTeX Project Public License (LPPL), version 1.3c or, at your option, any later
+version. The full license text is available at:
+
+https://www.latex-project.org/lppl/lppl-1-3c/
+
+The upstream abnTeX2 and biblatex-abnt projects retain their own copyright and
+license notices. Patch files in this repository describe changes against those
+upstream LPPL-licensed works; this repository is not an official ABNT or
+abnTeX2 distribution.
