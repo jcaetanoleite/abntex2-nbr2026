@@ -15,12 +15,15 @@ jobs:
       - name: Compile and check citation regressions
         uses: xu-cheng/latex-action@v4
         with:
-          root_file: citations.tex
+          root_file: |
+            citations.tex
+            apud.tex
           working_directory: tests
           texlive_version: 2026
           extra_system_packages: poppler-utils
           post_compile: |
             pdftotext citations.pdf citations.txt
+
             grep -F '(Silva, 2024)' citations.txt
             grep -F '(Souza; Lima, 2022)' citations.txt
             grep -F '(Souza; Lima; Costa, 2023)' citations.txt
@@ -28,5 +31,10 @@ jobs:
             grep -F '(Anteprojeto [...], 1987)' citations.txt
             grep -F '(A flor [...], 1995)' citations.txt
             grep -F '(O Guarani, 1857)' citations.txt
+
+            pdftotext apud.pdf apud.txt
+            grep -F 'apud' apud.txt
+            pdffonts apud.pdf | grep -q 'CMTI'
         env:
           TEXINPUTS: ".:../latex//:"
+          

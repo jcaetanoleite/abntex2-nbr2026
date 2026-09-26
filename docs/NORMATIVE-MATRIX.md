@@ -15,7 +15,7 @@ não reproduz o texto das normas e não substitui a consulta às edições ofici
 | NBR 10520:2023 | Pessoa jurídica | Implementado | Entidade em caixa mista; siglas preservadas quando fornecidas como sigla. |
 | NBR 10520:2023 | Fonte sem autoria | Implementado com fallback | Primeira palavra; artigo/monossílabo comum + palavra seguinte; `shorttitle` para exceções. |
 | NBR 10520:2023 | Mesmo sobrenome + mesmo ano | Implementado | Iniciais primeiro; prenome completo se necessário. |
-| NBR 10520:2023 | Mesma autoria + mesmo ano | Implementado | Letras `a`, `b`, ... após a data. |
+| NBR 10520:2023 | Uso de `apud` | Implementado | Expressão *apud* em itálico; regressão específica no CI. |
 | NBR 10520:2023 | Citação direta longa | Implementado no layout existente | Corpo reduzido, espaço simples e recuo configurável; 4 cm mantido como padrão recomendado. |
 | NBR 10520:2023 | Localização em fonte não paginada | Já suportada pelo modelo de pós-nota | O autor informa `cap.`, `art.`, localização etc. no argumento de citação; não é inferido. |
 | NBR 6023:2025 | DOI como endereço resolvível | Implementado | `DOI: https://doi.org/...`. |
@@ -26,7 +26,7 @@ não reproduz o texto das normas e não substitui a consulta às edições ofici
 | NBR 6023:2025 | Rede social | Pendente de driver específico | Ainda não certificado. |
 | NBR 6023:2025 | Software/dataset | Pendente de driver específico | Ainda não certificado. |
 | NBR 6023:2025 | Jurídico/patente/cartografia/iconografia/audiovisual | Parcial/herdado | Requer comparação exemplo a exemplo com a edição 2025. |
-| NBR 14724:2024 | TCC, dissertação e tese | Fora do escopo desta rodada | Deve ser uma segunda frente, separada do perfil artigo. |
+| NBR 14724:2024 Versão Corrigida:2025 | TCC, dissertação e tese | Fora do escopo desta rodada | Deve ser uma segunda frente, separada do perfil artigo. |
 
 ## Decisões de projeto
 

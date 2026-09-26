@@ -2,7 +2,7 @@
 %% Experimental citation layer over biblatex-abnt for ABNT NBR 10520:2023.
 %% Copyright 2026 João Caetano Leite and contributors.
 %% Distributed under the LaTeX Project Public License 1.3c or later.
-\ProvidesFile{abnt-nbr2026.cbx}[2026/09/25 v0.1.0-dev ABNT NBR 10520:2023]
+\ProvidesFile{abnt-nbr2026.cbx}[2026/09/26 v0.1.1-dev ABNT NBR 10520:2023]
 \RequireCitationStyle{abnt}
 
 \ExecuteBibliographyOptions{%
@@ -77,5 +77,68 @@
   \iffieldundef{shorttitle}
     {\ABNTNBRCiteTitleAbbrev{#1}}
     {\MakeCapital{#1}}}
+
+
+% NBR 10520:2023 — "apud" em itálico.
+% Esta camada fixa o comportamento para que o resultado não dependa
+% da revisão do biblatex-abnt disponível na distribuição TeX.
+
+\renewcommand{\addapud}{%
+  \renewcommand*{\compcitedelim}{%
+    \ifnumequal{\value{multicitecount}}{\value{multicitetotal}}%
+      {\space\mkbibitalic{\bibstring{apud}}}%
+      {\addsemicolon}%
+    \space}%
+  \renewcommand*{\multicitedelim}{%
+    \ifnumequal{\value{multicitecount}}{\value{multicitetotal}}%
+      {\space\mkbibitalic{\bibstring{apud}}}%
+      {\addsemicolon}%
+    \space}%
+  \renewcommand*{\textcitedelim}{%
+    \ifnumequal{\value{multicitecount}}{\value{multicitetotal}}%
+      {\addspace\mkbibitalic{\bibstring{apud}}}%
+      {\addsemicolon}%
+    \space}%
+}
+
+\DeclareCiteCommand{\@apud}
+  {\usebibmacro{cite:init}%
+    \iffieldundef{prenote}{}{%
+      \ifnumgreater{\value{multicitetotal}}{1}{%
+        \usebibmacro{prenote}%
+      }{%
+        \printfield[uppercasecite]{prenote}%
+        \isdot\addspace\mkbibitalic{\bibstring{apud}}\addspace%
+      }%
+    }%
+  }%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{apud}}%
+  {\setunit{\multicitedelim}}%
+  {\usebibmacro{postnote}}
+
+\RenewDocumentCommand{\textapud}{o o m o o m}{%
+  \citelastname{#3}\addspace%
+  \mkbibparens{%
+    \IfNoValueTF{#2}{%
+      \IfNoValueTF{#1}{%
+        \citeyearorsh*{#3}%
+      }{%
+        \citeyearorsh*[#1]{#3}%
+      }%
+    }{%
+      \citeyearorsh*[#1][#2]{#3}%
+    }\addspace%
+    \IfNoValueTF{#5}{%
+      \IfNoValueTF{#4}{%
+        \plaincite[\mkbibitalic{\blx@imc@bibxstring{apud}}][]{#6}%
+      }{%
+        \plaincite[\mkbibitalic{\blx@imc@bibxstring{apud}}][#4]{#6}%
+      }%
+    }{%
+      \cite[\mkbibitalic{\blx@imc@bibxstring{apud}} #4][#5]{#6}%
+    }%
+  }%
+}
 
 \endinput

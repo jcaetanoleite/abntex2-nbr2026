@@ -12,10 +12,10 @@ Esta primeira versão concentra-se no perfil de artigo científico:
 - ABNT NBR 10520:2023 — citações;
 - ABNT NBR 6023:2025 — referências.
 
-A NBR 14724:2024, voltada a trabalhos acadêmicos como TCCs, dissertações e
+A ABNT NBR 14724:2024 Versão Corrigida:2025, voltada a trabalhos acadêmicos como TCCs, dissertações e
 teses, ficará para uma etapa própria.
 
-> **Estado:** `v0.1.0-dev`. A camada foi compilada e testada, mas ainda não
+> **Estado:** `v0.1.1-dev`. A camada foi compilada e testada, mas ainda não
 > declara conformidade integral com todos os modelos bibliográficos da NBR
 > 6023:2025. Consulte `docs/NORMATIVE-MATRIX.md`.
 
@@ -31,8 +31,9 @@ arquivo `.tex`:
 Depois use:
 
 ```tex
-\documentclass[article,11pt,oneside,a4paper,brazil]{abntex2}
+\documentclass[article,11pt,oneside,a4paper,brazilian]{abntex2}
 
+\usepackage{csquotes}
 \usepackage{abntex2-nbr2026}
 \usepackage[
   backend=biber,

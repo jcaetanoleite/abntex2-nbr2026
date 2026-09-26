@@ -1,4 +1,18 @@
 # Changelog
+## 2026-09-26 — v0.1.1-dev
+
+### NBR 10520:2023
+- torna `apud` itálico independentemente da revisão do `biblatex-abnt` instalada;
+- adiciona regressão dedicada para `\apud`;
+- atualiza os exemplos para `brazilian` e adiciona `csquotes`.
+
+### Normas vigentes
+- corrige a referência para ABNT NBR 14724:2024 Versão Corrigida:2025;
+- registra TeX Live 2026 como ambiente corrente de integração contínua.
+
+### Infraestrutura
+- amplia o GitHub Actions para compilar dois documentos de regressão;
+- verifica automaticamente as formas autor-data e a formatação de `apud`.
 
 ## 2026-09-25 — v0.1.0-dev
 
