@@ -1,0 +1,34 @@
+name: LaTeX regression tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile citation tests
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: citations.tex
+          working_directory: tests
+          texlive_version: 2026
+          extra_system_packages: "poppler-utils"
+        env:
+          TEXINPUTS: ".:../latex//:"
+
+      - name: Check citation output
+        run: |
+          pdftotext tests/citations.pdf tests/citations.txt
+          grep -F '(Silva, 2024)' tests/citations.txt
+          grep -F '(Souza; Lima, 2022)' tests/citations.txt
+          grep -F '(Souza; Lima; Costa, 2023)' tests/citations.txt
+          grep -F '(Amaral et al., 2021)' tests/citations.txt
+          grep -F '(Anteprojeto [...], 1987)' tests/citations.txt
+          grep -F '(A flor [...], 1995)' tests/citations.txt
+          grep -F '(O Guarani, 1857)' tests/citations.txt
